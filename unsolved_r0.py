@@ -1,6 +1,6 @@
 #!/bin/python
 DESCRIPTION = """Lists the unsolved challenges on R0 (using the given
-PHPSESSID), sorted in various orders to help pick the next challenge to solve.
+PHPSESSID), sorted to help pick the next challenge to solve.
 """
 
 import argparse
@@ -72,27 +72,30 @@ def fetch_challenges(sessid):
         challenges.extend(parse_category(category))
     return challenges
 
-def challenge_score(challenge, weight_points):
-    return (challenge.solves * challenge.points if weight_points
-            else challenge.solves)
-
+def challenge_score(challenge, points_weight):
+    multiplier = (challenge.points - 1) * points_weight
+    return challenge.solves * (1.0 + multiplier)
 
 def main():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument("phpsessid",
                         help="PHPSESSID cookie for your R0 session")
-    parser.add_argument("--no-points-weighting", action="store_true")
-    parser.add_argument("-n", "--max-challenges", type=int, default=10)
+    parser.add_argument("--points-weight", type=float, default=1.0,
+                        help="Weight contributed by the challenge points to " +
+                              "the sorting score.")
+    parser.add_argument("-n", "--max-challenges", type=int, default=10,
+                        help="Max number of challenges to display. " +
+                             "Set to high number to display all.")
     args = parser.parse_args()
 
     challenges = fetch_challenges(args.phpsessid)
     unsolved = [chal for chal in challenges if not chal.solved]
-    weight_points = not args.no_points_weighting
-    unsolved.sort(key=lambda chal: challenge_score(chal, weight_points),
+    points_weight = args.points_weight
+    unsolved.sort(key=lambda chal: challenge_score(chal, points_weight),
                   reverse=True)
 
     display_n = args.max_challenges
-    print(tabulate([[challenge_score(c, weight_points), c.name, c.id, c.solves,
+    print(tabulate([[challenge_score(c, points_weight), c.name, c.id, c.solves,
                      c.points] for c in unsolved[:display_n]],
                    headers=["Score", "Name", "Id", "# Solves", "# Points"]))
 
