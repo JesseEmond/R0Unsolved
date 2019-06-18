@@ -28,7 +28,7 @@ Note:
     672  PHP Jail 5                      227         112           6
 ```
 
-Guess I should get started on that shellcoding track...
+Guess I should get back to that shellcoding track...
 
 ## Setup
 Uses Python 3.
