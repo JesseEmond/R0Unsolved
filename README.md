@@ -13,7 +13,7 @@ Note:
 
 ## Example
 ```
-> python unsolved_r0.py 2574
+> python unsolved_r0.py 2574  # look up 'dysleixa' (/profile/2574)
   Score  Name                             Id    # Solves    # Points
 -------  -----------------------------  ----  ----------  ----------
    1088  Linux x64 shellcoding level 4   132         136           8
