@@ -13,7 +13,7 @@ Note:
 
 ## Example
 ```
-> python unsolved_r0.py $PHPSESSID
+> python unsolved_r0.py 2574
   Score  Name                             Id    # Solves    # Points
 -------  -----------------------------  ----  ----------  ----------
    1088  Linux x64 shellcoding level 4   132         136           8
@@ -40,13 +40,13 @@ pip install --user -r requirements.txt
 ```
 > python unsolved_r0.py -h
 usage: unsolved_r0.py [-h] [--points-weight POINTS_WEIGHT] [-n MAX_CHALLENGES]
-                      phpsessid
+                      userid
 
-Lists the unsolved challenges on R0 (using the given PHPSESSID), sorted to
-help pick the next challenge to solve.
+Lists the unsolved challenges on R0 (using the given user ID), sorted to help
+pick the next unsolved challenge that has the most solves, weighted by points.
 
 positional arguments:
-  phpsessid             PHPSESSID cookie for your R0 session
+  userid                User ID (from your profile URL).
 
 optional arguments:
   -h, --help            show this help message and exit
